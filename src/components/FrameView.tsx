@@ -1995,9 +1995,12 @@ export const FrameView = memo(function FrameView({
             ) : lod === 'image' && frame.html ? (
               /* the server's render of the current design (frameImageUrl):
                  one decoded bitmap instead of a whole document. The world's
-                 zoom scales it like any other box, so no counter-zoom. */
+                 zoom scales it like any other box, so no counter-zoom.
+                 `relative`, like the iframe above: the frame's white fill is an
+                 absolute ::before, and a static image paints under it — the
+                 frame then reads as a blank white box until zoomed back in. */
               <img
-                className={cn('block', isCanvasElement(frame.html) ? 'bg-transparent' : 'bg-white')}
+                className={cn('relative block', isCanvasElement(frame.html) ? 'bg-transparent' : 'bg-white')}
                 src={frameImageUrl(frame, isCanvasElement(frame.html))}
                 alt=""
                 draggable={false}
